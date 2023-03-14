@@ -18,7 +18,7 @@ public class MonsterData : MonoBehaviour
 
     public MonsterLevel CurrentLevel{ //public current level
     //used for getting and setting the private current level
-        get { 
+        get { //even though it returns, this reads currentLevel
             return currentLevel;
             }
         set {
@@ -42,7 +42,7 @@ public class MonsterData : MonoBehaviour
 
     //starts monsters level at 1 when placed
     void OnEnable(){
-        CurrentLevel = levels[0];
+        CurrentLevel = levels[0]; //starts at level 1
     }
 
     //gets the currentlevel and compares it to the last list position
@@ -59,8 +59,10 @@ public class MonsterData : MonoBehaviour
         }
     }
 
+    //This increases the level when it is called
     public void IncreaseLevel(){
-        int currentLevelIndex - levels.IndexOf(currentLevel);
+        int currentLevelIndex = levels.IndexOf(currentLevel);
+
         if (currentLevelIndex < levels.Count - 1){
             CurrentLevel = levels[currentLevelIndex+1];
         }
