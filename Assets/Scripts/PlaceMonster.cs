@@ -6,10 +6,13 @@ public class PlaceMonster : MonoBehaviour
 {
     public GameObject monsterPrefab; // the monster prefab
     private GameObject monster; //created monster
+
+    private GameManagerBehaviour gameManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehaviour>(); //finds the objects and then its component(script)
+
     }
 
     // Update is called once per frame
@@ -21,7 +24,8 @@ public class PlaceMonster : MonoBehaviour
     //checks if the monster is variable is null
     //prevents duplication
     private bool CanPlaceMonster(){
-        return monster == null;
+        int cost = monsterPrefab.GetComponent<MonsterData>().levels[0].cost;
+        return monster == null && gameManager.Gold >= cost; //can only place a monster if theres a space available and they can afford it
     }
 
     private bool CanUpgradeMonster()
@@ -32,7 +36,7 @@ public class PlaceMonster : MonoBehaviour
             MonsterLevel nextLevel = monsterData.GetNextLevel(); //is the method in MonsterData.cas
             if (nextLevel != null) //if there is space to level up
             {
-                return true; //then, level up
+                return gameManager.Gold >= nextLevel.cost; //then, level up
             }
         }
         return false;
@@ -47,7 +51,7 @@ public class PlaceMonster : MonoBehaviour
             //quaternion.identity is default rotation
             //(GameObject) is a cast from inheritance
             monster = (GameObject)Instantiate(monsterPrefab, transform.position, Quaternion.identity);
-            
+            gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost; //takes away the value of the element
             AudioSource audioSource = gameObject.GetComponent<AudioSource>();//plays an audio once
             audioSource.PlayOneShot(audioSource.clip);
         }
@@ -56,6 +60,7 @@ public class PlaceMonster : MonoBehaviour
             monster.GetComponent<MonsterData>().IncreaseLevel(); //takes the method in monsterData()
             AudioSource audioSource = gameObject.GetComponent<AudioSource>();
             audioSource.PlayOneShot(audioSource.clip);
+            gameManager.Gold -= monster.GetComponent<MonsterData>().CurrentLevel.cost; //takes away the value of the element
         }
     }
 }
