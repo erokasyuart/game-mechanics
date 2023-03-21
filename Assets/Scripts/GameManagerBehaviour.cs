@@ -38,11 +38,45 @@ public class GameManagerBehaviour : MonoBehaviour
         }
     }
 
+    //player health
+    public Text healthLabel;
+    public GameObject[] healthIndicator;
+    private int health;
+    public int Health
+    {
+        get { return health; }
+        set
+        {
+            health = value;
+            healthLabel.text = "HEALTH: " + health;
+
+            if (health <= 0 && !gameOver)
+            {
+                gameOver= true;
+                GameObject gameOverText = GameObject.FindGameObjectWithTag("GameOver");
+                gameOverText.GetComponent<Animator>().SetBool("gameOver", true);
+            }
+
+            for (int i = 0; i < healthIndicator.Length; i++)
+            {
+                if (i < health)
+                {
+                    healthIndicator[i].SetActive(true);
+                }
+                else
+                {
+                    healthIndicator[i].SetActive(false);
+                }
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         Gold = 1000;
         Wave = 0;
+        Health = 5;
     }
 
     // Update is called once per frame
