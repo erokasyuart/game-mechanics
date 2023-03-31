@@ -31,16 +31,16 @@ public class ShootEnemies : MonoBehaviour
                 minimalEnemyDistance = distanceToGoal;
             }
 
-            if (target != null)
+        }
+        if (target != null)
+        {
+            if (Time.time - lastShotTime > monsterData.CurrentLevel.fireRate)
             {
-                if (Time.time - lastShotTime > monsterData.CurrentLevel.fireRate)
-                {
-                    Shoot(target.GetComponent<Collider2D>());
-                    lastShotTime = Time.time;
-                }
-                Vector3 direction = gameObject.transform.position - target.transform.position;
-                gameObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * 180 /Mathf.PI, new Vector3(0,0,1));
+                Shoot(target.GetComponent<Collider2D>());
+                lastShotTime = Time.time;
             }
+            Vector3 direction = gameObject.transform.position - target.transform.position;
+            gameObject.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(direction.y, direction.x) * 180 /Mathf.PI, new Vector3(0,0,1));
         }
     }
 
