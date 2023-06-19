@@ -10,11 +10,12 @@ public class MoveEnemy : MonoBehaviour
     private int currentWaypoint = 0;
     private float lastWaypointSwitchTime;
     public float speed = 1.0f;
+
     //Target Switching
     public float DistanceToGoal()
     {
         float distance = Vector2.Distance(gameObject.transform.position, waypoints[currentWaypoint + 1].transform.position);
-        for (int i = currentWaypoint + 1; i < waypoints.Length; i++)
+        for (int i = currentWaypoint + 1; i < waypoints.Length - 1; i++)
         {
             Vector3 startPosition = waypoints[i].transform.position;
             Vector3 endPosition = waypoints[i + 1].transform.position;
@@ -48,13 +49,10 @@ public class MoveEnemy : MonoBehaviour
                 currentWaypoint++; //
                 lastWaypointSwitchTime= Time.time;
                 RotateIntoMoveDirection();
-
-
             }
             else
             {
                 Destroy(gameObject);
-
                 AudioSource audioSource = gameObject.GetComponent<AudioSource>();
                 AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
                 GameManagerBehaviour gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehaviour>();

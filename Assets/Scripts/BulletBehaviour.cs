@@ -9,25 +9,27 @@ public class BulletBehaviour : MonoBehaviour
     public GameObject target;
     public Vector3 startPosition;
     public Vector3 targetPosition;
-    private Vector3 normaliseDirection;
+    private Vector3 normalizeDirection;
     private GameManagerBehaviour gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        normaliseDirection = (targetPosition - startPosition).normalized; //creates a standard direction vector
-        GameObject gm = GameObject.Find("GameManager");
+        normalizeDirection = (targetPosition - startPosition).normalized; //creates a standard direction vector
+        GameObject gm = GameObject.Find("GameManager"); //finds the gamemanager gameobject in the scene
         gameManager = gm.GetComponent<GameManagerBehaviour>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += normaliseDirection * speed * Time.deltaTime;
+        transform.position += normalizeDirection * speed * Time.deltaTime; //moves the bullet
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         target = other.gameObject;
+        
         if (target.tag.Equals("Enemy"))
         {
             Transform healthBarTransform = target.transform.Find("HealthBar");
