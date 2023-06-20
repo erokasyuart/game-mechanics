@@ -6,6 +6,8 @@ using UnityEngine;
 public class Wave
 {
     public GameObject enemyPrefab;
+    public GameObject enemy2Prefab;
+    
     public float spawnInterval = 2;
     public int maxEnemies = 20;
 }
@@ -13,7 +15,6 @@ public class Wave
 public class SpawnEnemy : MonoBehaviour
 {
     public GameObject[] waypoints;
-    public GameObject testEnePref;
 
     public Wave[] waves; //Wave class
     public int timeBetweenWaves = 5;
@@ -22,10 +23,10 @@ public class SpawnEnemy : MonoBehaviour
 
     private float lastSpawnTime;
     private int enemiesSpawned = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Instantiate(testEnePref).GetComponent<MoveEnemy>().waypoints = waypoints;
         lastSpawnTime = Time.time;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehaviour>();
     }
@@ -33,17 +34,16 @@ public class SpawnEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         int currentWave = gameManager.Wave;
         if (currentWave < waves.Length) //if it is NOT the last wave
         {
             float timeInterval = Time.time - lastSpawnTime;
             float spawnInterval = waves[currentWave].spawnInterval;
 
-            //If no enemies have spawned and the time interval has ended or there are no enemies and the time passed is more than the enemy spawn interval
-            //AND
-            // the enemies spawned are less than the current wave's max # of enemies
-            if (((enemiesSpawned == 0 && timeInterval > timeBetweenWaves) || (enemiesSpawned != 0 && timeInterval > spawnInterval))
-                && (enemiesSpawned < waves[currentWave].maxEnemies))
+            if (((enemiesSpawned == 0 && timeInterval > timeBetweenWaves) //If no enemies have spawned and the time interval has ended
+            || (enemiesSpawned != 0 && timeInterval > spawnInterval)) //or there are no enemies and the time passed is more than the enemy spawn interval
+            && (enemiesSpawned < waves[currentWave].maxEnemies)) //and the enemies spawned are less than the current wave's max # of enemies
             {
                 lastSpawnTime = Time.time; //then reset the lastSpawnTime
                 GameObject newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab); //instantiate a new enemy
@@ -51,12 +51,12 @@ public class SpawnEnemy : MonoBehaviour
                 enemiesSpawned++; //increase the enemy spawn
             }
             //if there are max number of enemies and there are no enemies with a tag (aka, all gone!)
-            if (enemiesSpawned == waves[currentWave].maxEnemies && GameObject.FindGameObjectsWithTag("Enemy") == null)
+            if (enemiesSpawned == waves[currentWave].maxEnemies && GameObject.FindGameObjectWithTag("Enemy") == null)
             {
                 gameManager.Wave++; //increase the wave
                 gameManager.Gold = Mathf.RoundToInt(gameManager.Gold * 1.1f); //give the player some gold
                 enemiesSpawned = 0; //reset the enemies spawned to 0
-                lastSpawnTime= Time.time; //reset the lastspawntime
+                lastSpawnTime = Time.time; //reset the lastspawntime
             }
         }
         else
@@ -65,5 +65,6 @@ public class SpawnEnemy : MonoBehaviour
             GameObject gameOverText = GameObject.FindGameObjectWithTag("GameWon");
             gameOverText.GetComponent<Animator>().SetBool("gameOver", true);
         }
+        
     }
 }

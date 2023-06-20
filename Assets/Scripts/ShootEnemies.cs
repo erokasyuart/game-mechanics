@@ -13,6 +13,7 @@ public class ShootEnemies : MonoBehaviour
     void Start()
     {
         enemiesInRange= new List<GameObject>();
+        
         lastShotTime = Time.time;
         monsterData= gameObject.GetComponentInChildren<MonsterData>();
     }
