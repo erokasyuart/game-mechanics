@@ -13,7 +13,6 @@ public class ShootEnemies : MonoBehaviour
     void Start()
     {
         enemiesInRange= new List<GameObject>();
-        
         lastShotTime = Time.time;
         monsterData= gameObject.GetComponentInChildren<MonsterData>();
     }
@@ -61,6 +60,7 @@ public class ShootEnemies : MonoBehaviour
         }
     }
 
+    //fires the bullet and checks if it collides with an enemy
     void Shoot(Collider2D target)
     {
         GameObject bulletPrefab = monsterData.CurrentLevel.bullet;

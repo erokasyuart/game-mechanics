@@ -26,6 +26,7 @@ public class BulletBehaviour : MonoBehaviour
         transform.position += normalizeDirection * speed * Time.deltaTime; //moves the bullet
     }
 
+    //The 2d collider component
     private void OnTriggerEnter2D(Collider2D other)
     {
         target = other.gameObject;

@@ -21,25 +21,25 @@ public class MonsterData : MonoBehaviour
 
     public MonsterLevel CurrentLevel{ //public current level
     //used for getting and setting the private current level
-        get { //even though it returns, this reads currentLevel
-            return currentLevel;
-            }
-        set {
-            currentLevel = value;
-            int currentLevelIndex = levels.IndexOf(currentLevel); //takes whatever the index is ofcurrent level
+    get { //even though it returns, this reads currentLevel
+        return currentLevel;
+        }
+    set {
+        currentLevel = value;
+        int currentLevelIndex = levels.IndexOf(currentLevel); //takes whatever the index is ofcurrent level
 
-            GameObject levelVisualisation = levels[currentLevelIndex].visualisation;
+        GameObject levelVisualisation = levels[currentLevelIndex].visualisation;
 
-            for (int i=0; i < levels.Count; i++){
-                if (levelVisualisation != null){
-                    if (i == currentLevelIndex){
-                        levels[i].visualisation.SetActive(true);
-                    }
-                    else{
-                        levels[i].visualisation.SetActive(false);
-                    }
+        for (int i=0; i < levels.Count; i++){
+            if (levelVisualisation != null){
+                if (i == currentLevelIndex){
+                    levels[i].visualisation.SetActive(true);
+                }
+                else{
+                    levels[i].visualisation.SetActive(false);
                 }
             }
+        }
         }
     }
 

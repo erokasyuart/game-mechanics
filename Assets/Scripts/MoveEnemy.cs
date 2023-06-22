@@ -61,6 +61,7 @@ public class MoveEnemy : MonoBehaviour
         }
     }
 
+    //rotates the sprite to the direction it will move to
     private void RotateIntoMoveDirection()
     {
         Vector3 newStartPosition = waypoints[currentWaypoint].transform.position;

@@ -12,13 +12,6 @@ public class PlaceMonster : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehaviour>(); //finds the objects and then its component(script)
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     //checks if the monster is variable is null
@@ -28,6 +21,7 @@ public class PlaceMonster : MonoBehaviour
         return monster == null && gameManager.Gold >= cost; //can only place a monster if theres a space available and they can afford it
     }
 
+    //allows the player to upgrade the monster
     private bool CanUpgradeMonster()
     {
         if (monster != null) //if there is a monster
